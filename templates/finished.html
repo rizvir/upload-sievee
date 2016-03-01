@@ -1,0 +1,24 @@
+{% import 'customize.html' as c %}
+
+{% extends "webix.html" %}
+{% block title %}Completed{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block webixcode %}
+		{ template: 	'<img src="{{ url_for("static", filename="check-animate-once-delay.gif") }}?{{ randomnum }}" alt="Success"><br><br> \
+				{{c.finished_text|safe}}', height:500, 
+		},
+	],
+});
+
+{% endblock %}
+
+{% block endbody %}
+{% if demo_mode %}
+Here is the report you would be emailed if this wasn't running in demo-mode:
+<pre>
+{{report}}
+</pre>
+{% endif %}
+{% endblock %}

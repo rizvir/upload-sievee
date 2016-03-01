@@ -1,0 +1,22 @@
+{% import 'customize.html' as c %}
+
+{% extends "webix.html" %}
+{% block title %}Upload your CV - Step 2 of 6{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block webixcode %}
+		{ template: 	"<div style='text-align:left'>{{c.information_text|safe}}", autoheight:true, },
+
+		{ view:"button", value:"Next", label:"Next", type:"next", width:100, align:"right", click:"next_button()" },
+	],
+
+});
+
+function next_button() {
+	{% include "animate-exit.js" %}
+		window.location.replace("{{ url_for("basic_questions") }}");
+	});
+};
+
+{% endblock %}

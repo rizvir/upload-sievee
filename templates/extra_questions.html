@@ -1,0 +1,28 @@
+{% import 'customize.html' as c %}
+
+{% extends "webix.html" %}
+{% block title %}{{c.extra_questions_header|safe}} - Step 4 of 6{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block webixcode %}
+		{ template: "<h3>{{c.extra_questions_header|safe}}:</h3><div style='text-align:left'>{{c.extra_questions_text|safe}}</div>", autoheight:true},
+
+		{% include 'render_question_form.html' %}
+		
+	],
+
+});
+
+// Replace the logo with a stop watch
+{% include 'topleft_stopwatch.html' %}
+
+function next_button() {
+	answers_obj = $$('questions').getValues();
+	answers_obj.time_away = total_time_away;
+	{% include "animate-exit.js" %}
+		webix.send('extra_questions', answers_obj);
+	});
+};
+
+{% endblock %}

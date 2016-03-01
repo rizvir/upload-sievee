@@ -1,0 +1,23 @@
+stopwatch_html = '<div class="stopwatch-container"><div class="stopwatch-timer"><div class="stopwatch-cell"><div class="stopwatch-numbers tenhour stopwatch-moveten">0 1 2 3 4 5 6 7 8 9</div></div><div class="stopwatch-cell"><div class="stopwatch-numbers hour stopwatch-moveten">0 1 2 3 4 5 6 7 8 9</div></div><div class="stopwatch-cell divider"><div class="stopwatch-numbers">:</div></div><div class="stopwatch-cell"><div class="stopwatch-numbers tenminute stopwatch-movesix">0 1 2 3 4 5 6</div></div><div class="stopwatch-cell"><div class="stopwatch-numbers minute stopwatch-moveten">0 1 2 3 4 5 6 7 8 9</div></div><div class="stopwatch-cell divider"><div class="stopwatch-numbers">:</div></div><div class="stopwatch-cell"><div class="stopwatch-numbers tensecond stopwatch-movesix">0 1 2 3 4 5 6</div></div><div class="stopwatch-cell"><div class="stopwatch-numbers second stopwatch-moveten">0 1 2 3 4 5 6 7 8 9</div></div><div class="stopwatch-cell divider"><div class="stopwatch-numbers">:</div></div><div class="stopwatch-cell"><div class="stopwatch-numbers milisecond stopwatch-moveten">0 1 2 3 4 5 6 7 8 9</div></div><div class="stopwatch-cell"><div class="stopwatch-numbers tenmilisecond stopwatch-moveten">0 1 2 3 4 5 6 7 8 9</div></div></div></div>'
+
+$$('topleft').setHTML(stopwatch_html);
+
+
+// Also record the time spent away from the page
+
+var time_away = 0
+var time_back = 0
+var total_time_away = 0
+// Away:
+$(window).blur(function(){
+        time_away =  new Date().getTime();
+});
+
+// Back:
+$(window).focus(function(){
+        if (time_away != 0) {
+                time_back = new Date().getTime();
+                total_time_away += (time_back - time_away) / 1000;
+        };
+});
+

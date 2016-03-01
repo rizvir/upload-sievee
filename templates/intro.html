@@ -1,0 +1,36 @@
+{% import 'customize.html' as c %}
+
+{% extends "webix.html" %}
+{% block title %}Upload your CV - Step 1 of 6{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block webixcode %}
+		{ template: "{{c.intro_line_1|safe}}", autoheight:true},
+
+		{ template: "{{c.intro_line_2|safe}}", autoheight:true },
+		
+
+		{ view:"form", id:"candidateinfo", width:300, elements: [
+			{ view:"search", name:"name", icon:"user", placeholder:"Full name", width:250, align:"center", validate:webix.rules.isNotEmpty },
+			{ view:"search", name:"email", icon:"envelope", placeholder:"Email address", width:250, align:"center", validate:webix.rules.isEmail },
+			{ view:"search", name:"phone", icon:"phone", placeholder:"Phone number", width:250, align:"center", validate:webix.rules.isNotEmpty },
+			{ view:"button", value:"Next", label:"Next", width:100, align:"right", type:"next", click:"next_button()" },
+		]},
+
+		
+	],
+
+});
+
+function next_button() {
+	if ( $$('candidateinfo').validate() ) {
+		{% include "animate-exit.js" %}
+			webix.send('information', $$('candidateinfo').getValues())
+			
+		});
+	}
+
+};
+
+{% endblock %}

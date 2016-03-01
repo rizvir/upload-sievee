@@ -1,0 +1,35 @@
+CREATE DATABASE upload_cv;
+
+CREATE USER 'upload_cv_user'@'localhost' IDENTIFIED BY 'yourpassword';
+GRANT ALL ON upload_cv.* TO 'upload_cv_user'@'localhost';
+
+USE upload_cv;
+
+CREATE TABLE candidates (
+	id				INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	entry_date			DATETIME,
+	name				VARCHAR(254),
+	email				VARCHAR(254),
+	phone				VARCHAR(50),
+	ip				VARCHAR(15),
+	useragent			VARCHAR(254),
+	read_intro			BOOLEAN,
+	basic_questions_start		DATETIME,
+	basic_questions_end		DATETIME,
+	basic_questions_timeaway	INT DEFAULT 0,
+	basic_questions_incorrect	INT DEFAULT 0,
+	extra_questions_start		DATETIME,
+	extra_questions_end		DATETIME,
+	extra_questions_timeaway	INT DEFAULT 0,
+	cv_uploaded			BOOLEAN DEFAULT FALSE
+);
+
+CREATE INDEX idx_c_id ON candidates(id);
+
+CREATE INDEX idx_c_uploaded ON candidates(cv_uploaded);
+CREATE INDEX idx_c_email ON candidates(email);
+CREATE INDEX idx_c_phone ON candidates(phone);
+CREATE INDEX idx_c_ip ON candidates(ip);
+
+
+

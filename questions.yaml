@@ -1,0 +1,69 @@
+basic-questions:
+        - question: "What is the right answer to this question?"
+          id: "question01"
+          type: "radio"
+          options:
+                - "The incorrect answer"
+                - "Another wrong answer"
+                - "The right answer"
+                - "One more incorrect answer"
+          answer: "The right answer"
+
+
+        - question: "The answer to the following question is /etc/fstab"
+          id: "question02"
+          type: "line"
+          hint: "/etc"
+          answer: "/etc/fstab"
+
+        - question: "You can include <i>some</i> HTML in the <abbr title='Yet Another Markup Language'>YAML</abbr> file. Do you want to continue?"
+          id: "question03"
+          type: "radio"
+          options:
+                - "Not really"
+                - "I prefer sticking to this page"
+                - "Mesmerized by the stopwatch"
+                - "Yes!"
+          answer: "Yes!"
+        
+
+extra-questions:
+        - question: "Just a free-form question, you don't have to fill this up"
+          id: "question01"
+          type: "multiline"
+          height: 100
+          width: 400
+
+        - question: "Another question that could be answered."
+          id: "question02"
+          type: "multiline"
+          height: 100
+          width: 400
+        
+        - question: "The height and width of the textbox can be customized in the YAML, what do you think of that?"
+          id: "question03"
+          type: "multiline"
+          height: 200
+          width: 600
+
+
+nontech-questions:
+        - question: "This is similar to the questions on the previous page (but not timed)"
+          id: "question01"
+          type: "multiline"
+          height: 100
+          width: 600
+          
+        - question: "Did you know you could have a one line answer box?"
+          id: "question02"
+          type: "line"
+
+        - question: "You could even have a radio selection"
+          id: "question03"
+          type: "radio"
+          options:
+                - "Really?"
+                - "I knew that."
+                - "You could have a what selection?"
+
+

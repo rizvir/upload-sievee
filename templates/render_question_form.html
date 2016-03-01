@@ -1,0 +1,25 @@
+                { view:"form", id:"questions", elements: [
+                        {% for question in questions %}
+                                { view:"label", id:"{{question.id}}", label:"<div style='text-align:left'><b>{{ question.question|safe }}</b></div>", },
+                                {% if question.type == "radio" %}
+                                        { view:"radio", name:"{{question.id}}", vertical:true, options:[
+                                        {% for option in question.options %}
+                                                { value: "{{option}}", id:"{{option}}" },
+                                        {% endfor %}
+                                        ]},
+                                {% endif %}
+
+                                {% if question.type == "line" %}
+                                        { view:"text", name:"{{question.id}}", value:"{{question.hint}}", width:{{question.width or 300}} },
+                                {% endif %}
+
+                                {% if question.type == "multiline" %}
+                                        { view:"textarea", name:"{{question.id}}", value:"{{question.hint}}", height:{{question.height or 100}}, width:{{question.width or 400}} },
+                                {% endif %}
+
+                                { view:"label", label:"<br/>" },
+                        {% endfor %}
+
+                        { view:"button", value:"next", label:"Next", type:"next", width:100, align:"right", click:"next_button()" },
+                ]},
+

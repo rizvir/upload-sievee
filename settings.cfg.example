@@ -1,0 +1,16 @@
+SQL_DB = 'upload_cv'
+SQL_IP = "127.0.0.1"
+SQL_USER = "upload_cv_user"
+SQL_PASSWORD = "yourpassword"
+REPO_DIR = "/tmp/repo"
+SECRET_KEY = '1234abcd'
+
+DEMO_MODE = True
+
+# It's mandatory that you have a working mail server, unless demo_mode is set to True
+# No need for authentication if you point it to the recipient MX record
+MAIL_FROM = "opensievee@yourdomain.com"
+MAIL_TO = [ "careers@yourdomain.com" ]
+MAIL_SERVER = "127.0.0.1"
+
+

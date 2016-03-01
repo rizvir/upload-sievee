@@ -1,0 +1,24 @@
+{% import 'customize.html' as c %}
+
+{% extends "webix.html" %}
+{% block title %}{{c.last_questions_header|safe}} - Step 5 of 6{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block webixcode %}
+
+		{ template: "<h3>{{c.last_questions_header|safe}}:</h3>{{c.last_questions_text|safe}}", autoheight:true},
+
+		{% include 'render_question_form.html' %}
+		
+	],
+
+});
+
+function next_button() {
+	{% include "animate-exit.js" %}
+		webix.send('nontech_questions', $$('questions').getValues());
+	});
+};
+
+{% endblock %}

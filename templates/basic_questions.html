@@ -1,0 +1,50 @@
+{% import 'customize.html' as c %}
+
+{% extends "webix.html" %}
+{% block title %}{{c.basic_questions_header}} - Step 3 of 6{% endblock %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block webixcode %}
+
+		{ template: "<h3>{{c.basic_questions_header|safe}}:</h3><div style='text-align:left'>{{c.basic_questions_text|safe}}</div>", autoheight:true},
+
+		{% include 'render_question_form.html' %}
+		
+	],
+
+});
+
+// Replace the logo with a stop watch
+{% include 'topleft_stopwatch.html' %}
+
+function next_button() {
+	// First clear any red highlighting for all questions
+	{% for question in questions %}
+		webix.html.removeCss( $$("{{question.id}}").getNode(), "redhighlight");
+	{% endfor %}
+
+	// Get a list of incorrectly answered questions
+	webix.ajax().post("basic_questions_check", $$('questions').getValues(), function(text){
+		incorrect_questions = JSON.parse(text)['incorrect_questions'];
+
+		if (incorrect_questions.length == 0){
+			// All questions correct, go to the next stage
+			// Pass the answers again for server side verification
+			answers_obj = $$('questions').getValues();
+			answers_obj.time_away = total_time_away;
+			{% include "animate-exit.js" %}
+				webix.send('basic_questions_check_animation', answers_obj);
+			});
+		} else {
+			// Otherwise give a message and highlight incorrect questions
+			webix.message({type:"error", text:"Some questions were answered incorrectly"});
+
+			for (var i=0; i < incorrect_questions.length; i++){
+				webix.html.addCss( $$(incorrect_questions[i]).getNode(), "redhighlight");
+			};
+		};
+	});
+};
+
+{% endblock %}
