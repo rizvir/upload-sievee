@@ -36,9 +36,11 @@ app = Flask(__name__)
 app.config.from_pyfile('settings.cfg')
 app.secret_key = app.config['SECRET_KEY']
 
+appdir = os.path.abspath(os.path.dirname(__file__))
+
 @app.before_request
 def before_request():
-	g.questions = yaml.load(open('questions.yaml', 'r'))
+	g.questions = yaml.load(open(os.path.join(appdir, 'questions.yaml'), 'r'))
 
 	g.engine = create_engine('mysql://{user}:{password}@{ip}/{db}'.format(user=app.config['SQL_USER'], 
 		password=app.config['SQL_PASSWORD'], ip=app.config['SQL_IP'], db=app.config['SQL_DB']))
