@@ -43,7 +43,7 @@ def before_request():
 	g.questions = yaml.load(open(os.path.join(appdir, 'questions.yaml'), 'r'))
 
 	g.engine = create_engine('mysql://{user}:{password}@{ip}/{db}'.format(user=app.config['SQL_USER'], 
-		password=app.config['SQL_PASSWORD'], ip=app.config['SQL_IP'], db=app.config['SQL_DB']))
+		password=app.config['SQL_PASSWORD'], ip=app.config['SQL_IP'], db=app.config['SQL_DB']), pool_recycle=280)
 	meta = MetaData()
 	g.candidates = Table('candidates', meta, autoload=True, autoload_with=g.engine)
 	g.conn = g.engine.connect()
