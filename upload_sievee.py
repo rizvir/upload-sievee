@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
 from flask import Flask, render_template, request, url_for, g, json, jsonify, redirect, session
 import yaml
 import json
@@ -42,12 +41,21 @@ appdir = os.path.abspath(os.path.dirname(__file__))
 def before_request():
 	g.questions = yaml.load(open(os.path.join(appdir, 'questions.yaml'), 'r'))
 
-	g.engine = create_engine('mysql://{user}:{password}@{ip}/{db}'.format(user=app.config['SQL_USER'], 
-		password=app.config['SQL_PASSWORD'], ip=app.config['SQL_IP'], db=app.config['SQL_DB']), pool_recycle=280)
-	meta = MetaData()
-	g.candidates = Table('candidates', meta, autoload=True, autoload_with=g.engine)
-	g.conn = g.engine.connect()
-
+	try:
+		g.engine = create_engine('mysql://{user}:{password}@{ip}/{db}'.format(user=app.config['SQL_USER'], 
+			password=app.config['SQL_PASSWORD'], ip=app.config['SQL_IP'], db=app.config['SQL_DB']), strategy='threadlocal', pool_recycle=280)
+		meta = MetaData()
+		g.candidates = Table('candidates', meta, autoload=True, autoload_with=g.engine)
+		g.conn = g.engine.connect()
+	except Exception, e:
+		app.logger.error("Error connecting to the database: {0}".format(str(e)))
+		return "Error connecting to the database. Try again later.", 503
+		
+@app.teardown_request
+def teardown_request(exception):
+	conn = getattr(g, 'conn', None)
+	if conn is not None:
+		conn.invalidate()
 
 @app.route("/")
 def intro_page():
